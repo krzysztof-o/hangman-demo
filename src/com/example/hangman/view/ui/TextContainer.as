@@ -4,26 +4,28 @@ import flash.display.Sprite;
 import flash.text.TextField;
 import flash.text.TextFieldAutoSize;
 import flash.text.TextFormat;
+import flash.text.TextFormatAlign;
 
 public class TextContainer extends Sprite
 {
 	private const PADDING:Number = 10;
 	private var label:TextField;
 
-	public function TextContainer(text:String, width:Number)
+	public function TextContainer(text:String, width:Number, align:String = TextFormatAlign.LEFT)
 	{
 		super();
 
-		createText(text, width);
+		createText(text, width, align);
 		createBg();
 	}
 
-	private function createText(text:String, width:Number):void
+	private function createText(text:String, width:Number, align:String):void
 	{
 		var textFormat:TextFormat = new TextFormat();
 		textFormat.color = 0x000000;
 		textFormat.font = "Arial";
 		textFormat.size = 18;
+		textFormat.align = align
 
 		label = new TextField();
 		label.defaultTextFormat = textFormat;
