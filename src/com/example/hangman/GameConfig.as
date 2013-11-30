@@ -1,6 +1,18 @@
 package com.example.hangman
 {
+import com.example.hangman.command.LoadWordsCommand;
+import com.example.hangman.command.WordsLoadingErrorCommand;
+import com.example.hangman.command.WordsReadyCommand;
+import com.example.hangman.event.WordsServiceEvent;
+import com.example.hangman.model.GameModel;
+import com.example.hangman.service.IWordsService;
+import com.example.hangman.service.WordsService;
+import com.example.hangman.view.MainMediator;
 import com.example.hangman.view.MainView;
+import com.example.hangman.view.StartMediator;
+import com.example.hangman.view.StartView;
+
+import flash.events.IEventDispatcher;
 
 import robotlegs.bender.extensions.contextView.ContextView;
 import robotlegs.bender.extensions.eventCommandMap.api.IEventCommandMap;
@@ -18,10 +30,23 @@ public class GameConfig implements IConfig
 	public var commandMap:IEventCommandMap;
 	[Inject]
 	public var contextView:ContextView;
+	[Inject]
+	public var eventDispatcher:IEventDispatcher;
 
 	public function configure():void
 	{
+		injector.map(IWordsService).toType(WordsService);
+		injector.map(GameModel).asSingleton();
+
+		commandMap.map(WordsServiceEvent.LOAD).toCommand(LoadWordsCommand);
+		commandMap.map(WordsServiceEvent.LOADING_ERROR).toCommand(WordsLoadingErrorCommand);
+		commandMap.map(WordsServiceEvent.READY).toCommand(WordsReadyCommand);
+
+		mediatorMap.map(MainView).toMediator(MainMediator);
+		mediatorMap.map(StartView).toMediator(StartMediator);
+
 		contextView.view.addChild(new MainView());
+		eventDispatcher.dispatchEvent(new WordsServiceEvent(WordsServiceEvent.LOAD));
 	}
 }
 }
