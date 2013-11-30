@@ -36,7 +36,7 @@ public class StartView extends Sprite
 		const MARGIN_RIGHT:Number = 20;
 		button = new StartButton();
 		button.x = stage.stageWidth - button.width - MARGIN_RIGHT;
-		button.y = 300;
+		button.y = stage.stageHeight - 150;
 		addChild(button);
 
 		button.addEventListener(MouseEvent.CLICK, onClick);
