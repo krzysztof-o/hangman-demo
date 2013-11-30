@@ -8,7 +8,7 @@ public class HangmanDemo extends Sprite
 {
 	public function HangmanDemo()
 	{
-		
+
 	}
 }
 }
