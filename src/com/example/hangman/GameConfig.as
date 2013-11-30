@@ -1,12 +1,14 @@
 package com.example.hangman
 {
 import com.example.hangman.command.EndGameCommand;
-import com.example.hangman.command.KeyDownCommand;
+import com.example.hangman.command.KeyPressedCommand;
+import com.example.hangman.command.VirtualKeyPressedCommand;
 import com.example.hangman.command.LoadWordsCommand;
 import com.example.hangman.command.StartGameCommand;
 import com.example.hangman.command.WordsLoadingErrorCommand;
 import com.example.hangman.command.WordsReadyCommand;
 import com.example.hangman.event.GameEvent;
+import com.example.hangman.event.VirtualKeyboardEvent;
 import com.example.hangman.event.WordsServiceEvent;
 import com.example.hangman.model.GameModel;
 import com.example.hangman.model.RoundModel;
@@ -59,7 +61,8 @@ public class GameConfig implements IConfig
 
 		commandMap.map(GameEvent.START).toCommand(StartGameCommand);
 		commandMap.map(GameEvent.END).toCommand(EndGameCommand);
-		commandMap.map(KeyboardEvent.KEY_DOWN).toCommand(KeyDownCommand);
+		commandMap.map(VirtualKeyboardEvent.KEY_PRESSED).toCommand(VirtualKeyPressedCommand);
+		commandMap.map(KeyboardEvent.KEY_DOWN).toCommand(KeyPressedCommand);
 
 		mediatorMap.map(MainView).toMediator(MainMediator);
 		mediatorMap.map(StartView).toMediator(StartMediator);

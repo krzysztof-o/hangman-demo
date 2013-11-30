@@ -1,20 +1,19 @@
 package com.example.hangman.command
 {
 import com.example.hangman.event.GameEvent;
-import com.example.hangman.model.GameModel;
+import com.example.hangman.event.VirtualKeyboardEvent;
 import com.example.hangman.model.RoundModel;
 import com.example.hangman.model.WordsModel;
 
 import flash.events.IEventDispatcher;
-import flash.events.KeyboardEvent;
 import flash.media.Sound;
 
 import robotlegs.bender.extensions.commandCenter.api.ICommand;
 
-public class KeyDownCommand implements ICommand
+public class VirtualKeyPressedCommand implements ICommand
 {
 	[Inject]
-	public var event:KeyboardEvent;
+	public var event:VirtualKeyboardEvent;
 	[Inject]
 	public var wordsModel:WordsModel;
 	[Inject]
@@ -27,7 +26,7 @@ public class KeyDownCommand implements ICommand
 
 	public function execute():void
 	{
-		var character:String = String.fromCharCode(event.charCode).toUpperCase();
+		var character:String = event.character.toUpperCase();
 		if(!wordsModel.isCorrectLetter(character)) return;
 		if(roundModel.alreadyGuessed(character)) return;
 
